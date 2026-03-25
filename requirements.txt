@@ -2,3 +2,4 @@ streamlit
 xhtml2pdf
 Pillow
 qrcode
+pytz
