@@ -1,0 +1,214 @@
+/* --- 1. FONDO GENERAL Y RESET DE STREAMLIT --- */
+header, footer, .stDeployButton { 
+    visibility: hidden; 
+    display: none !important; 
+}
+
+.stApp { 
+    background-color: #edf1f5 !important; /* Fondo azulado claro institucional */
+}
+
+/* Eliminamos el espacio automático (gap) entre bloques de Streamlit */
+div[data-testid="stVerticalBlock"] {
+    gap: 0rem !important;
+}
+
+.block-container {
+    padding-top: 0.1rem !important; /* Reduce el espacio entre la barra y el contenido */
+    padding-bottom: 1rem !important;
+}
+/* --- 2. BARRA SUPERIOR FIJA (HEADER) --- */
+.header-fix {
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 75px;
+    background-color: white !important;
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+    padding: 0 5%; 
+    border-bottom: 1px solid #7a1212;
+    z-index: 999999;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo-header { 
+    height: 45px; 
+}
+
+.btn-nueva-solicitud {
+    background-color: #7a1212; 
+    color: white !important;
+    padding: 8px 15px; 
+    border-radius: 6px;
+    text-decoration: none; 
+    font-size: 12px; 
+    font-weight: bold;
+}
+
+
+/* --- 3. LIMPIEZA DE CUADROS BLANCOS (FLECHAS ROJAS) --- */
+/* Forzamos que los contenedores del Header y Título sean transparentes */
+div[data-testid="stVerticalBlock"] > div:has(.header-fix),
+div[data-testid="stVerticalBlock"] > div:has(.titulo-principal),
+div[data-testid="stVerticalBlock"] > div:empty {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.titulo-principal {
+    text-align: center;
+    color: #7a1212;
+    margin-top: 100px !important; /* Espacio para no quedar bajo la barra */
+    margin-bottom: 25px !important;
+    background: transparent !important;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* --- 4. DISEÑO DE TARJETAS (CARD SYSTEM) --- */
+
+/* Usamos selectores encadenados para que sea imposible de ignorar */
+#root .stApp div[data-testid="stVerticalBlockBorderWrapper"] {
+    border: 2px solid #bb5a5a !important; /* Grosor de 2px para que se note */
+    background-color: transparent !important;
+    border-radius: 5px !important;
+    padding: 5px !important;
+}
+
+/* 2. ELIMINAR EL BORDE INTERNO (Línea gris que persiste) */
+/* A veces Streamlit dibuja dos líneas, esta regla mata la gris */
+#root .stApp div[data-testid="stVerticalBlockBorderWrapper"] > div {
+    border: none !important;
+}
+
+/* CREACIÓN DE TARJETAS INDEPENDIENTES */
+/* Aplicamos el fondo blanco y el margen a cada bloque de sección */
+div[data-testid="stVerticalBlock"] > div:has(h3) {
+    background-color: #ffffff !important;
+    padding: 4px !important;
+    border-radius: 10px !important;
+    border: none !important; 
+    margin-bottom: 1px !important;
+    display: block !important;
+
+    /* --- ESTA ES LA LÍNEA ROJA --- */
+    border-bottom: 2px solid #c98c8c !important;
+    
+    
+    /* ESTA LÍNEA CREA EL ESPACIO QUE BUSCAS */
+    margin-bottom: 5px !important; 
+    
+    /* Obliga a que cada tarjeta sea un bloque sólido separado */
+    display: block !important;
+}
+
+/* REFUERZO DE SEPARACIÓN (Opcional pero recomendado) */
+/* Si las tarjetas siguen pegadas, esto fuerza el espacio en el contenedor padre */
+div[data-testid="stVerticalBlock"] {
+    gap: 1.5rem !important;
+}
+
+
+/* --- 5. COMPONENTES DEL FORMULARIO --- */
+/* Pone en blanco los selectores (Escuela, Grado) */
+div[data-baseweb="select"] > div {
+    background-color: white !important;
+    border: 1px solid #cdd5df !important;
+    border-radius: 10px !important;
+}
+
+/* Pone en blanco los inputs de texto (DNI, Nombres, etc) */
+div[data-testid="stTextInput"] input {
+    background-color: white !important;
+    border: 1px solid #cdd5df  !important;
+    border-radius: 10px !important;
+}
+
+h2, h3 { 
+    color: #8B1D1D !important; 
+    font-weight: bold !important; 
+    margin-bottom: 15px !important;
+}
+
+/* --- BOTONES DIFERENCIADOS --- */
+
+/* 1. Botón "GENERAR FUT" (Principal - Rojo Oscuro) */
+div.stButton > button:first-child {
+    background-color: #c23232 !important; 
+    color: white !important;
+    border-radius: 12px !important;
+    padding: 12px 20px !important;
+    font-weight: bold !important;
+    border: none !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* 2. Botón "EDITAR/GUARDAR" (Naranja o Azul para distinguir acción) */
+/* Si lo pones dentro de un st.columns, puedes usar selectores específicos */
+div.stButton > button[kind="secondary"] {
+    background-color: #2980B9 !important; /* Azul Grisáceo */
+    color: white !important;
+    border-radius: 12px !important;
+    text-transform: none;
+}
+
+/* 3. Botón de "DESCARGA PDF" (Verde - Acción de éxito) */
+.stDownloadButton > button {
+    width: 100% !important;
+    background-color: #c4392f !important; /* Verde */
+    color: white !important;
+    border-radius: 12px !important;
+    padding: 12px 20px !important;
+    font-weight: bold !important;
+    text-transform: uppercase;
+    border: none !important;
+}
+
+/* --- EFECTOS HOVER --- */
+div.stButton > button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    transition: 0.3s;
+}
+
+.stDownloadButton > button:hover {
+    background-color: #218838 !important;
+    transform: scale(1.02);
+}
+
+
+/* --- 6. ADECUACIÓN PARA MÓVILES (ANDROID / IPHONE) --- */
+@media (max-width: 768px) {
+    .header-fix {
+        padding: 0 3%;
+        height: 65px;
+    }
+
+    .logo-header {
+        height: 35px;
+    }
+
+    .titulo-principal {
+        margin-top: 85px !important;
+        font-size: 1.1rem !important;
+    }
+
+    /* Forzar que las columnas se apilen verticalmente */
+    [data-testid="column"] {
+        width: 100% !important;
+        flex: 1 1 100% !important;
+        min-width: 100% !important;
+    }
+
+    /* Reducir acolchado en tarjetas para pantallas pequeñas */
+    div[data-testid="stVerticalBlock"] > div:has(h3), 
+    div[data-testid="stVerticalBlock"] > div:has(label) {
+        padding: 15px !important;
+    }
+}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* Configuración de página y cuerpo */
+        @page { size: A4; margin: 1.5cm 1.5cm 1.5cm 1.5cm; }
+        body { font-family: Helvetica, Arial, sans-serif; font-size: 7.5pt; color: #000; line-height: 1.1; }
+        
+        /* Tablas generales */
+        .table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-bottom: 2px; }
+        .table td { border: 0.5pt solid black; padding: 2px; text-align: center; vertical-align: middle; word-wrap: break-word; }
+        
+        /* Encabezados con fondo verde */
+        .bg { background-color: #c8ddba; font-weight: bold; font-size: 7pt; padding: 3px; }
+        
+        /* Cuadro de Solicitud */
+        .red-text { 
+            color: #000000; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            font-size: 8.5pt;
+            line-height: 1.1;
+        }
+        
+        .nota-pequena { font-size: 6pt; text-align: left; margin-bottom: 0px; margin-top: 2px; font-style: italic; }
+        
+        /* Fundamento */
+        .fundamento { 
+            text-align: justify; 
+            padding: 8px 12px; 
+            border: 0.5pt solid black; 
+            min-height: 100px; 
+            font-size: 9.5pt; 
+            margin-bottom: 5px; 
+        }
+        
+        /* Lista de documentos */
+        .doc-list { text-align: left; padding: 10px; border: 0.5pt solid black; font-size: 7.5pt; line-height: 1.4; min-height: 140px; }
+        
+        /* Firmas y Huella */
+        .huella-box { 
+            border: 1pt solid black; 
+            height: 2.5cm; 
+            width: 2.0cm; 
+            margin: 0 auto; 
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: left;"><img src="{logo_full}" width="280"></div>
+    
+    <div style="text-align: center; font-weight: bold; font-size: 12pt; margin-top: -20px; margin-bottom: 15px;">
+        FORMATO ÚNICO DE TRÁMITE<br>
+        <span style="font-size: 9pt;">GRADO ACADÉMICO DE BACHILLER</span>
+    </div>
+
+    <table style="margin: 0 auto 8px auto; width: auto; border-collapse: collapse;">
+        <tr>
+            <td style="border: 0.5pt solid black; padding: 3px 15px; font-weight: bold; font-size: 8.5pt; text-align: center; text-transform: uppercase;">
+                SEÑOR DIRECTOR DE LA ESCUELA PROFESIONAL DE {d['esc_dir']}
+            </td>
+        </tr>
+    </table>
+    
+    <table class="table">
+        <tr><td class="bg">SOLICITO</td></tr>
+        <tr>
+            <td class="red-text" style="padding: 5px 10px;">
+                OTORGAMIENTO DE GRADO ACADÉMICO DE BACHILLER EN {d['grado']}
+            </td>
+        </tr>
+    </table>
+    
+    <div class="nota-pequena">
+        *Indicar correctamente la denominación del título profesional y la especialidad cuando corresponda
+    </div>
+    
+    <table class="table" style="margin-top: 3px;">
+        <tr><td class="bg" width="75%">Apellidos y Nombres (Conforme al DNI)</td><td class="bg" width="25%">DNI</td></tr>
+        <tr><td class="red-text" style="height: 18pt;">{d['nombre']}</td><td class="red-text">{d['dni']}</td></tr>
+    </table>
+
+    <table class="table" style="margin-top: 5px;">
+        <tr>
+            <td class="bg" width="15%">Facultad</td>
+            <td class="red-text" width="45%" style="text-align: left;">{d['facultad']}</td>
+            <td class="bg" colspan="2">Modalidad de Grado de Bachiller</td>
+        </tr>
+        <tr>
+            <td class="bg">Escuela Profesional</td>
+            <td class="red-text" style="text-align: left;">{d['escuela']}</td>
+            <td width="20%">{chk(d['m_bach'],'Automático')}<br>Automático</td>
+            <td width="20%">{chk(d['m_bach'],'Curso de Trabajo de Investigacion')}<br>Curso de Trabajo de Investigacion</td>
+        </tr>
+    </table>
+
+    <table class="table" style="margin-top: 6px;">
+        <tr>
+            <td class="bg" rowspan="2" width="12%">Código de Estudiante</td>
+            <td class="bg" colspan="3">Ingreso</td>
+            <td class="bg" colspan="2">Primera Matrícula</td>
+            <td class="bg" colspan="2">Egreso</td>
+        </tr>
+        <tr style="font-size: 6pt;">
+            <td class="bg" width="8%">Año</td>
+            <td class="bg" width="20%">Modalidad</td> 
+            <td class="bg" width="18%">Resolución</td> 
+            <td class="bg" width="11%">Fecha</td>
+            <td class="bg" width="10%">Semestre</td>
+            <td class="bg" width="11%">Fecha</td>
+            <td class="bg" width="10%">Semestre</td>
+        </tr>
+        <tr class="red-text" style="font-size: 8pt;">
+            <td>{d['cod']}</td>
+            <td>{d['i_a']}</td>
+            <td style="font-size: 6.5pt;">{mod_final}</td>
+            <td style="font-size: 6.5pt;">{d['i_r']}</td>
+            <td>{d['m_f']}</td>
+            <td>{d['m_s']}</td>
+            <td>{d['e_f']}</td>
+            <td>{d['e_s']}</td>
+        </tr>
+    </table>
+    <div class="nota-pequena">* Si la modalidad de ingreso es exonerados detallar el tipo de exoneración</div>
+
+    <table class="table" style="margin-top: 6px;">
+        <tr><td class="bg" width="15%">Celular</td><td class="bg" width="50%">Dirección</td><td class="bg" width="35%">Correo Electrónico*</td></tr>
+        <tr class="red-text"><td>{d['cel']}</td><td style="font-size: 8pt; text-align: left;">{d['dir']}</td><td style="text-transform: lowercase;">{d['cor']}</td></tr>
+    </table>
+
+    <table class="table" style="margin-top: 6px;">
+        <tr><td class="bg" colspan="5">Información Étnica: Por sus costumbres y antepasados se siente parte de:(Marque con X)</td><td class="bg" colspan="4">Habla alguna lengua originaria</td></tr>
+        <tr style="height: 50px;">
+            <td width="14%">{chk(d['et_c'],'Indigina u uriginaria')}<br>Si Pertenece a un pueblo indígena u origianario</td>
+            <td width="12%">Especifique:<br><span class="red-text" style="font-size: 7pt;">{d['et_e']}</span></td>
+            <td width="18%">{chk(d['et_c'],'Afroperuana')}<br>Población afroperuana, negra, morena, zamba, mulata, afrodescendiente o parte del pueblo afroperuano</td>
+            <td width="8%">{chk(d['et_c'],'No')}<br>No</td>
+            <td width="10%">{chk(d['et_c'],'NS')}<br>No Sabe / No Responde</td>
+            <td width="8%">{chk(d['le_c'],'Si')}<br>Si</td>
+            <td width="15%">Especifique:<br><span class="red-text" style="font-size: 7pt;">{d['le_e']}</span></td>
+            <td width="7%">{chk(d['le_c'],'No')}<br>No</td>
+            <td width="8%">{chk(d['le_c'],'NS')}<br>No Sabe / No Responde</td>
+        </tr>
+    </table>
+    <div class="nota-pequena">* Especificar según los Anexos 1 y 2 adjuntos mediante el Código QR.</div>
+
+    <div class="bg" style="border: 0.5pt solid black; border-bottom: none; padding: 4px; margin-top: 5px;">
+        Fundamento de lo solicitado:
+    </div>
+    <div class="fundamento">
+        {f_fundamento}
+    </div>
+
+    <div class="bg" style="border: 0.5pt solid black; border-bottom: none; padding: 4px; margin-top: 5px;">
+        Documentos que se adjuntan:
+    </div>
+    <div class="doc-list">
+        {d['doc_list']}
+    </div>
+
+    <div class="nota-pequena" style="margin-top: 4px;">(*) El Certificado de Idiomas, para aquellos que no están en su Currículo de Estudios.</div>
+    <p style="font-weight: bold; margin: 8px 0 5px 0;">POR LO EXPUESTO: A usted, Señor Director, pido acceder a mi solicitud por ser de justicia.</p>
+    
+    <table class="table" style="margin-top: 8px;">
+        <tr class="bg">
+            <td width="35%">Lugar y Fecha</td>
+            <td width="40%">Firma del Solicitante</td>
+            <td width="25%">Huella dactilar</td>
+        </tr>
+        <tr style="height: 80px;">
+            <td><div style="font-size: 9pt; font-weight: bold;">{d['lugar']}, {d['fecha']}</div></td>
+            <td style="vertical-align: bottom; padding-bottom: 10px;">
+                <div style="border-top: 0.5pt solid black; width: 75%; margin: 0 auto;"></div>
+            </td>
+            <td><div class="huella-box"></div></td>
+        </tr>
+    </table>
+
+    <table style="width: 100%; border: none; margin-top: 5px;">
+        <tr>
+            <td class="nota-pequena" style="text-align: left; vertical-align: top; line-height: 1.2;">
+                * Autorizo la notificación por correo electrónico (TUO de la Ley Nº 27444, Art. 20º)<br>
+                * Según Resolución Directoral N.º 0012-2025-SUNEDU-DS-DIRGRATU
+            </td>
+            <td style="text-align: right; width: 60px;">
+                <img src="{qr}" width="55">
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
